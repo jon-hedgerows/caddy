@@ -1,0 +1,11 @@
+{ # disable http redirect, which stops caddy listening on port 80 for http
+	auto_https disable_redirects
+	https_port 443
+}
+https://server.example.com {
+	reverse_proxy service:8080
+		tls {
+			dns cloudflare {env.CF_API_TOKEN}
+  		resolvers 1.1.1.1
+		}
+}

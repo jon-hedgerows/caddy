@@ -1,0 +1,22 @@
+services:
+  caddy:
+    image: ghcr.io/jon-hedgerows/caddy-cloudflare:latest
+    restart: unless-stopped
+    environment:
+      CF_API_TOKEN: ${CF_API_TOKEN}
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+    volumes:
+      # let caddy remember certificates and config across runs
+      - caddy-data:/data
+      - caddy-config:/config
+      # configuration
+      - ./conf:/etc/caddy
+      # site
+      - ./site:/srv
+
+volumes:
+  caddy-data:
+  caddy-config:
