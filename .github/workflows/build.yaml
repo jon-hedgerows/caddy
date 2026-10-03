@@ -68,6 +68,8 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             # disabled if major zero
             type=semver,pattern={{major}},enable=${{ !startsWith(github.ref, 'refs/tags/v0.') }}
+            # Generate SHA tag ONLY if the current reference is not a git tag
+            type=sha,enable=${{ github.ref_type != 'tag' }}
 
       - name: Build and push Docker image
         id: push
